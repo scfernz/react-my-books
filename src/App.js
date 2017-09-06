@@ -15,32 +15,6 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then(res => this.setState({books: res}));
   }
 
-  // filterBooks = (shelfName) => {
-  //   if (this.state.books) {
-  //     let filteredBooks;
-  //     let shelfType;
-  //     switch (shelfName) {
-  //       case 'Currently Reading':
-  //         shelfType = 'currentlyReading';
-  //         break;
-  //       case 'Want to Read':
-  //         shelfType = 'wantToRead';
-  //         break;
-  //       case 'Finished Reading':
-  //         shelfType = 'read';
-  //         break;
-  //       default:
-  //         return null;
-  //     }
-  //     filteredBooks = this.state.books.filter(
-  //       (book) => book.shelf === shelfType
-  //     )
-  //     return filteredBooks;
-  //   } else {
-  //     return [];
-  //   }
-  // }
-
   render() {
     return (
       <div className="app">
