@@ -8,6 +8,8 @@ class Shelf extends React.Component {
       shelfTitle: props.shelfTitle,
       books: props.books
     }
+    console.log(props);
+    this.updateBookShelf = props.updateBookShelf;
   }
   componentWillReceiveProps(nextProps) {
     if(this.props !== nextProps) {
@@ -44,9 +46,7 @@ class Shelf extends React.Component {
               {
                 this.state.books ? (
                  (this.filterBooks(this.state.books)).map((book) =>
-                  <li>
-                    <Book key={book.title} book={book} />
-                  </li>
+                    <Book key={book.id} book={book} updateBookShelf={this.updateBookShelf} />
                 )) : ''
               }
             </ol>

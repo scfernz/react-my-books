@@ -1,7 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import { Route } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import Search from './components/Search'
 import Shelf from './components/Shelf'
 
@@ -15,10 +15,18 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then(res => this.setState({books: res}));
   }
 
+  updateBookShelf(book, shelf) {
+    BooksAPI.update(book, shelf).then(() =>
+      BooksAPI.getAll().then(res => this.setState({books: res}))
+    )
+  }
+
   render() {
     return (
       <div className="app">
-          <Route path="/search" component={ Search }/>
+          <Route path="/search" render={() => (
+            <Search updateBookShelf={(book, shelf) => this.updateBookShelf(book, shelf)} />
+          )}/>
           <Route exact path="/" render={() => (
             <div className="list-books">
               <div className="list-books-title">
@@ -26,12 +34,12 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 {this.state.shelfName.map((shelfName) => (
-                  <Shelf key={shelfName} shelfTitle={shelfName} books={this.state.books}/>
+                  <Shelf key={shelfName} shelfTitle={shelfName} books={this.state.books} updateBookShelf={(book, shelf) => this.updateBookShelf(book, shelf)}/>
                 ))
               }
               </div>
               <div className="open-search">
-                <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+                <Link to="/search">Add a book</Link>
               </div>
             </div>
             )}/>
