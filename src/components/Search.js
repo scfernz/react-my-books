@@ -7,28 +7,23 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = { books: [], shelvedBooks: [], shelvedBookIDs: [] };
-    this.query = '';
     this.updateBookShelf = props.updateBookShelf;
   }
   componentDidMount() {
     BooksAPI.getAll().then(res => this.setState({shelvedBooks: res, shelvedBookIDs: res.map((book) => book.id)}));
   }
   handleSearch(e) {
-    console.log(e.target.value);
-    console.log(this.shelvedBooks);
     BooksAPI.search(e.target.value, 5).then(res => this.setState({books: res}));
-    console.log(this.state.books);
   }
-  checkShelvedID(book) {
-    if (this.state.shelvedBookIDs.includes(book.id)) {
-      // return this.state.shelvedBooks.find((book) => book.id === this.state.shelvedBooksIDs).shelf;
-      return this.state.shelvedBooks[0].shelf;
+  checkShelvedID(id) {
+    if (this.state.shelvedBookIDs.includes(id)) {
+      let bookID = id;
+      return this.state.shelvedBooks.find((book) => book.id === bookID).shelf;
     } else {
       return 'none';
     }
   }
   render() {
-    console.log(this.state);
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -50,12 +45,12 @@ class Search extends React.Component {
           <ol className="books-grid">
               {
                 this.state.books ? (
-                 this.state.books.map((book) =>
+                 this.state.books.map((b) =>
                     <Book
-                      key={book.id}
-                      book={book}
+                      key={b.id}
+                      book={b}
                       updateBookShelf={this.updateBookShelf}
-                      shelf={this.checkShelvedID(book)}
+                      shelf={this.checkShelvedID(b.id)}
                     />
                 )) : ''
               }

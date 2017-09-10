@@ -8,14 +8,13 @@ class Book extends React.Component {
     	imageURL: props.book.imageLinks.thumbnail,
     	bookTitle: props.book.bookTitle,
     	authors: props.book.authors,
-    	shelf: props.book.shelf
+    	shelf: props.shelf || props.book.shelf
     }
     this.updateBookShelf = props.updateBookShelf;
-    console.log(props);
   }
    componentWillReceiveProps(nextProps) {
     if(this.props !== nextProps) {
-      this.setState({shelf: nextProps.book.shelf});
+      this.setState({shelf: nextProps.shelf});
     }
   }
   handleSelect(e) {

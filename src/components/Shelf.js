@@ -8,7 +8,6 @@ class Shelf extends React.Component {
       shelfTitle: props.shelfTitle,
       books: props.books
     }
-    console.log(props);
     this.updateBookShelf = props.updateBookShelf;
   }
   componentWillReceiveProps(nextProps) {
